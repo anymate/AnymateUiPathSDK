@@ -44,19 +44,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\CreateAndTakeTask.cs" />
-    <Compile Include="API\Failure.cs" />
-    <Compile Include="API\FinishRun.cs" />
-    <Compile Include="API\GetRules.cs" />
-    <Compile Include="API\OkToRun.cs" />
-    <Compile Include="API\StartOrGetRun.cs" />
-    <Compile Include="API\TakeNextTask.cs" />
-    <Compile Include="API\RetryTask.cs" />
-    <Compile Include="API\ErrorTask.cs" />
-    <Compile Include="API\ManualTask.cs" />
-    <Compile Include="API\SolveTask.cs" />
-    <Compile Include="API\UpdateTask.cs" />
-    <Compile Include="API\InitializeClient.cs" />
+    <Compile Include="TaskCreation\CreateAndTakeTask.cs" />
+    <Compile Include="Runs\Failure.cs" />
+    <Compile Include="Runs\FinishRun.cs" />
+    <Compile Include="Setup\GetRules.cs" />
+    <Compile Include="Runs\OkToRun.cs" />
+    <Compile Include="Runs\StartOrGetRun.cs" />
+    <Compile Include="TaskActions\TakeNextTask.cs" />
+    <Compile Include="TaskActions\RetryTask.cs" />
+    <Compile Include="TaskActions\ErrorTask.cs" />
+    <Compile Include="TaskActions\ManualTask.cs" />
+    <Compile Include="TaskActions\SolveTask.cs" />
+    <Compile Include="TaskActions\UpdateTask.cs" />
+    <Compile Include="Setup\InitializeClient.cs" />
     <Compile Include="Helpers\AddOrUpdateDictionary.cs" />
     <Compile Include="Helpers\GetCreateTaskDictionary.cs" />
     <Compile Include="Helpers\GetListFromJson.cs" />
@@ -69,7 +69,7 @@
     <Compile Include="Models\ApiProcessFailure.cs" />
     <Compile Include="Models\ApiResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="API\CreateTask.cs" />
+    <Compile Include="TaskCreation\CreateTask.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
