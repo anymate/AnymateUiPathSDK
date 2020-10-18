@@ -7,7 +7,7 @@ namespace Anymate.UiPath.Helpers
     public class GetUpdateTaskDictionary : CodeActivity
     {
 
-        [Category("Input - Required")]
+        [Category("Input")]
         [DefaultValue(null)]
         [RequiredArgument]
         public InArgument<long> TaskId { get; set; }

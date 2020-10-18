@@ -7,7 +7,7 @@ namespace Anymate.UiPath.Helpers
     public class GetCreateTaskJObject : CodeActivity
     {
 
-        [Category("Input - Required")]
+        [Category("Input")]
         [DefaultValue(null)]
         [RequiredArgument]
         public InArgument<string> ProcessKey { get; set; }

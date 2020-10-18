@@ -29,7 +29,7 @@ namespace Anymate.UiPath.TaskActions
         [RequiredArgument]
         public InArgument<Dictionary<string, string>> DictPayload { get; set; }
 
-        [Category("Input - Required")]
+        [Category("Input")]
         [OverloadGroup("OnlyJObject")]
         [OverloadGroup("OnlyJson")]
         [DefaultValue(null)]
