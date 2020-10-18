@@ -50,17 +50,13 @@
     <Compile Include="API\GetRules.cs" />
     <Compile Include="API\OkToRun.cs" />
     <Compile Include="API\StartOrGetRun.cs" />
-    <Compile Include="API\GetVariables.cs" />
     <Compile Include="API\TakeNextTask.cs" />
     <Compile Include="API\RetryTask.cs" />
     <Compile Include="API\ErrorTask.cs" />
     <Compile Include="API\ManualTask.cs" />
     <Compile Include="API\SolveTask.cs" />
     <Compile Include="API\UpdateTask.cs" />
-    <Compile Include="Auth\GetAccessToken.cs" />
-    <Compile Include="Auth\GetOrRefreshToken.cs" />
-    <Compile Include="Auth\RefreshToken.cs" />
-    <Compile Include="AnymateClientFactory.cs" />
+    <Compile Include="API\InitializeClient.cs" />
     <Compile Include="Helpers\AddOrUpdateDictionary.cs" />
     <Compile Include="Helpers\GetCreateTaskDictionary.cs" />
     <Compile Include="Helpers\GetListFromJson.cs" />
@@ -79,6 +75,9 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Anymate">
+      <Version>0.1.0-CI-20201018-095313</Version>
+    </PackageReference>
     <PackageReference Include="Anymate.Client">
       <Version>0.0.0.22</Version>
     </PackageReference>

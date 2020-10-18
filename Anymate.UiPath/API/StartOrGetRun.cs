@@ -9,12 +9,12 @@ namespace Anymate.UiPath.API
 {
     public class StartOrGetRun : CodeActivity
     {
-        private IAnymateClient _apiService;
+        private IAnymateService _apiService;
 
-        
-        [Category("Input - OAuth2")]
+
+        [Category("Input")]
         [RequiredArgument]
-        public InArgument<string> AccessToken { get; set; }
+        public InArgument<IAnymateService> AnymateService { get; set; }
 
 
         [Category("Input")]
@@ -28,12 +28,11 @@ namespace Anymate.UiPath.API
 
         protected override void Execute(CodeActivityContext context)
         {
-            _apiService = AnymateClientFactory.GetClient();
-            var access_token = AccessToken.Get(context);
-            TokenValidator.AccessTokenLooksRight(access_token);
+            _apiService = AnymateService.Get(context);
+            
             var processKey = ProcessKey.Get(context);
             
-            var jsonObject = _apiService.StartOrGetRun<Models.ApiNewRun>(access_token, processKey);
+            var jsonObject = _apiService.StartOrGetRun<Models.ApiNewRun>(processKey);
 
             RunId.Set(context, jsonObject.RunId);
 

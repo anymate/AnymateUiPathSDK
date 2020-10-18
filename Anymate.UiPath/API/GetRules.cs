@@ -11,12 +11,12 @@ namespace Anymate.UiPath.API
 {
     public class GetRules : CodeActivity
     {
-        private IAnymateClient _apiService;
+        private IAnymateService _apiService;
 
-       
-        [Category("Input - OAuth2")]
+
+        [Category("Input")]
         [RequiredArgument]
-        public InArgument<string> AccessToken { get; set; }
+        public InArgument<IAnymateService> AnymateService { get; set; }
 
 
         [Category("Input")]
@@ -29,24 +29,21 @@ namespace Anymate.UiPath.API
         public OutArgument<string> JsonString { get; set; }
         [Category("Output - Data")]
         public OutArgument<JObject> JsonObject { get; set; }
-        [Category("Output - Data")]
-        public OutArgument<bool> RefreshTokenAsap { get; set; }
 
 
 
         protected override void Execute(CodeActivityContext context)
         {
-            _apiService = AnymateClientFactory.GetClient();
-            var access_token = AccessToken.Get(context);
-            RefreshTokenAsap.Set(context, !TokenValidator.RefreshNotNeeded(access_token));
-            TokenValidator.AccessTokenLooksRight(access_token);
+            _apiService = AnymateService.Get(context);
+            
+           
             var processKey = ProcessKey.Get(context);
             if(string.IsNullOrWhiteSpace(processKey))
             {
                 throw new Exception("ProcessKey can't be null or empty.");
             }
 
-            var result = _apiService.GetVariables(access_token, processKey);
+            var result = _apiService.GetVariables(processKey);
             var jsonObject = JObject.Parse(result);
 
             JsonObject.Set(context, jsonObject);

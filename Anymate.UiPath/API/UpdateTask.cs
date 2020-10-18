@@ -13,13 +13,12 @@ namespace Anymate.UiPath.API
 {
     public class UpdateTask : CodeActivity
     {
-        private IAnymateClient _apiService;
+        private IAnymateService _apiService;
 
-        
 
-        [Category("Input - OAuth2")]
+        [Category("Input")]
         [RequiredArgument]
-        public InArgument<string> AccessToken { get; set; }
+        public InArgument<IAnymateService> AnymateService { get; set; }
 
         [Category("Input - Json")]
         [OverloadGroup("OnlyJson")]
@@ -58,25 +57,19 @@ namespace Anymate.UiPath.API
         public OutArgument<string> Message { get; set; }
         [Category("Output - FlowControl")]
         public OutArgument<bool> Succeeded { get; set; }
-        [Category("Output - FlowControl")]
-        [DefaultValue(false)]
-        public OutArgument<bool> RefreshTokenAsap { get; set; }
 
 
         protected override void Execute(CodeActivityContext context)
         {
-            _apiService = AnymateClientFactory.GetClient();
-            var access_token = AccessToken.Get(context);
-            if (!TokenValidator.RefreshNotNeeded(access_token))
-                RefreshTokenAsap.Set(context, true);
+            _apiService = AnymateService.Get(context);
+            
 
-            TokenValidator.AccessTokenLooksRight(access_token);
                 
 
             var json = JsonPayload.Get(context);
             if (!string.IsNullOrWhiteSpace(json))
             {
-                var result = _apiService.UpdateTask(access_token, json);
+                var result = _apiService.UpdateTask(json);
 
                 Message.Set(context, result.Message);
                 Succeeded.Set(context, result.Succeeded);
@@ -99,7 +92,7 @@ namespace Anymate.UiPath.API
                     dict[nameof(taskId)] = taskId.ToString();
                 }
                 var jsonPayload = JsonConvert.SerializeObject(dict);
-                var jsonObject = _apiService.UpdateTask<ApiResponse>(access_token, jsonPayload);
+                var jsonObject = _apiService.UpdateTask<ApiResponse>(jsonPayload);
                 Message.Set(context, jsonObject.Message);
                 Succeeded.Set(context, jsonObject.Succeeded);
 

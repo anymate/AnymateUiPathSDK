@@ -14,11 +14,12 @@ namespace Anymate.UiPath.API
 {
     public class CreateTask : CodeActivity
     {
-        private IAnymateClient _apiService;
+        private IAnymateService _apiService;
 
-        [Category("Input - OAuth2")]
+
+        [Category("Input")]
         [RequiredArgument]
-        public InArgument<string> AccessToken { get; set; }
+        public InArgument<IAnymateService> AnymateService { get; set; }
 
         [Category("Input - Json")]
         [OverloadGroup("OnlyJson")]
@@ -54,31 +55,28 @@ namespace Anymate.UiPath.API
         public OutArgument<bool> RefreshTokenAsap { get; set; }
         protected override void Execute(CodeActivityContext context)
         {
-            _apiService = AnymateClientFactory.GetClient();
+            _apiService = AnymateService.Get(context);
             var processKey = ProcessKey.Get(context);
             if (string.IsNullOrWhiteSpace(processKey))
             {
                 throw new Exception("Processkey missing");
             }
-            var access_token = AccessToken.Get(context);
-            if (!TokenValidator.RefreshNotNeeded(access_token))
-                RefreshTokenAsap.Set(context, true);
-            TokenValidator.AccessTokenLooksRight(access_token);
+           
             var json = JsonPayload.Get(context);
             if (string.IsNullOrWhiteSpace(json))
             {
                 var dict = DictPayload.Get(context);
 
-                var newNote = Comment.Get(context);
-                if (!string.IsNullOrWhiteSpace(newNote))
+                var comment = Comment.Get(context);
+                if (!string.IsNullOrWhiteSpace(comment))
                 {
-                    dict[nameof(newNote)] = newNote;
+                    dict[nameof(comment)] = comment;
                 }
 
                 json = JsonConvert.SerializeObject(dict);
             }
             
-            var result = _apiService.CreateTask<ApiResponse>(access_token, json, processKey);
+            var result = _apiService.CreateTask<ApiResponse>(json, processKey);
 
             Message.Set(context, result.Message);
             Succeeded.Set(context, result.Succeeded);

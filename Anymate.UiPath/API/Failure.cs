@@ -11,13 +11,12 @@ namespace Anymate.UiPath.API
 {
     public class Failure : CodeActivity
     {
-        private IAnymateClient _apiService;
+        private IAnymateService _apiService;
 
-     
 
-        [Category("Input - OAuth2")]
+        [Category("Input")]
         [RequiredArgument]
-        public InArgument<string> AccessToken { get; set; }
+        public InArgument<IAnymateService> AnymateService { get; set; }
 
 
         [Category("Input")]
@@ -40,11 +39,9 @@ namespace Anymate.UiPath.API
 
         protected override void Execute(CodeActivityContext context)
         {
-            _apiService = AnymateClientFactory.GetClient();
-            var access_token = AccessToken.Get(context);
-            if (!TokenValidator.RefreshNotNeeded(access_token))
-                RefreshTokenAsap.Set(context, true);
-            TokenValidator.AccessTokenLooksRight(access_token);
+            _apiService = AnymateService.Get(context);
+            
+           
             var processKey = ProcessKey.Get(context);
             var message = Message.Get(context);
           
@@ -56,7 +53,7 @@ namespace Anymate.UiPath.API
             };
 
 
-            var jsonObject = _apiService.Failure<ApiResponse, ApiProcessFailure>(access_token, apiAction);
+            var jsonObject = _apiService.Failure<ApiResponse, ApiProcessFailure>(apiAction);
 
             Response.Set(context, jsonObject.Message);
             Succeeded.Set(context, jsonObject.Succeeded);

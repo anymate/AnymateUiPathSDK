@@ -11,12 +11,12 @@ namespace Anymate.UiPath.API
 {
     public class FinishRun : CodeActivity
     {
-        private IAnymateClient _apiService;
+        private IAnymateService _apiService;
 
-       
-        [Category("Input - OAuth2")]
+
+        [Category("Input")]
         [RequiredArgument]
-        public InArgument<string> AccessToken { get; set; }
+        public InArgument<IAnymateService> AnymateService { get; set; }
 
 
         [Category("Input")]
@@ -24,9 +24,13 @@ namespace Anymate.UiPath.API
         [DefaultValue(null)]
         public InArgument<long> RunId { get; set; }
 
-        [Category("Input")]
-        [DefaultValue(0)]
-        public InArgument<int> ExternalEntries { get; set; }
+        [Category("Input - KPI Overrides")]
+        [DefaultValue(null)]
+        public InArgument<int?> OverwriteEntries { get; set; }
+
+        [Category("Input - KPI Overrides")]
+        [DefaultValue(null)]
+        public InArgument<int?> OverwriteSecondsSaved { get; set; }
 
         [Category("Output - FlowControl")]
         public OutArgument<string> Message { get; set; }
@@ -36,13 +40,13 @@ namespace Anymate.UiPath.API
 
         protected override void Execute(CodeActivityContext context)
         {
-            _apiService = AnymateClientFactory.GetClient();
-            var access_token = AccessToken.Get(context);
-            TokenValidator.AccessTokenLooksRight(access_token);
+            _apiService = AnymateService.Get(context);
+            
             var runId = RunId.Get(context);
-            var externalEntries = ExternalEntries.Get(context);
+            var overwriteSeconds = OverwriteSecondsSaved.Get(context);
+            var overwriteEntries = OverwriteEntries.Get(context);
 
-            var jsonObject = _apiService.FinishRun<ApiResponse, ApiFinishRun>(access_token, new ApiFinishRun() { RunId = runId });
+            var jsonObject = _apiService.FinishRun<ApiResponse, ApiFinishRun>(new ApiFinishRun() { RunId = runId, OverwriteEntries= overwriteEntries, OverwriteSecondsSaved = overwriteSeconds });
             Message.Set(context, jsonObject.Message);
             Succeeded.Set(context, jsonObject.Succeeded);
 

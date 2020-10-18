@@ -10,13 +10,12 @@ namespace Anymate.UiPath.API
 {
     public class ManualTask : CodeActivity
     {
-        private IAnymateClient _apiService;
-    
-       
+        private IAnymateService _apiService;
 
-        [Category("Input - OAuth2")]
+
+        [Category("Input")]
         [RequiredArgument]
-        public InArgument<string> AccessToken { get; set; }
+        public InArgument<IAnymateService> AnymateService { get; set; }
 
 
         [Category("Input")]
@@ -45,17 +44,11 @@ namespace Anymate.UiPath.API
         public OutArgument<string> Message { get; set; }
         [Category("Output - FlowControl")]
         public OutArgument<bool> Succeeded { get; set; }
-        [Category("Output - FlowControl")]
-        [DefaultValue(false)]
-        public OutArgument<bool> RefreshTokenAsap { get; set; }
 
         protected override void Execute(CodeActivityContext context)
         {
-            _apiService = AnymateClientFactory.GetClient();
-            var access_token = AccessToken.Get(context);
-            if (!TokenValidator.RefreshNotNeeded(access_token))
-                RefreshTokenAsap.Set(context, true);
-            TokenValidator.AccessTokenLooksRight(access_token);
+            _apiService = AnymateService.Get(context);
+            
             var taskId = TaskId.Get(context);
             var reason = Reason.Get(context);
             var newNote = Comment.Get(context);
@@ -73,7 +66,7 @@ namespace Anymate.UiPath.API
             };
 
   
-            var jsonObject = _apiService.Manual<ApiResponse, ApiAction>(access_token, apiAction);
+            var jsonObject = _apiService.Manual<ApiResponse, ApiAction>(apiAction);
             
             Message.Set(context, jsonObject.Message);
             Succeeded.Set(context, jsonObject.Succeeded);

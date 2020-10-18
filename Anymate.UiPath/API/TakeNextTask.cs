@@ -11,12 +11,12 @@ namespace Anymate.UiPath.API
 {
     public class TakeNextTask : CodeActivity
     {
-        private IAnymateClient _apiService;
+        private IAnymateService _apiService;
 
-        
-        [Category("Input - OAuth2")]
+
+        [Category("Input")]
         [RequiredArgument]
-        public InArgument<string> AccessToken { get; set; }
+        public InArgument<IAnymateService> AnymateService { get; set; }
 
 
         [Category("Input")]
@@ -33,26 +33,20 @@ namespace Anymate.UiPath.API
         public OutArgument<long> TaskId { get; set; }
         [Category("Output - FlowControl")]
         public OutArgument<bool> QueueIsEmpty { get; set; }
-        [Category("Output - FlowControl")]
-        [DefaultValue(false)]
-        public OutArgument<bool> RefreshTokenAsap { get; set; }
 
 
 
         protected override void Execute(CodeActivityContext context)
         {
-            _apiService = AnymateClientFactory.GetClient();
-            var access_token = AccessToken.Get(context);
-            if (!TokenValidator.RefreshNotNeeded(access_token))
-                RefreshTokenAsap.Set(context, true);
-            TokenValidator.AccessTokenLooksRight(access_token);
+            _apiService = AnymateService.Get(context);
+            
             var processKey = ProcessKey.Get(context);
             if(string.IsNullOrWhiteSpace(processKey))
             {
                 throw new System.Exception("ProcessKey can't be null or empty.");
             }
 
-            var result = _apiService.TakeNext(access_token, processKey);
+            var result = _apiService.TakeNext(processKey);
             var jsonObject = JObject.Parse(result);
 
             var taskId = Convert.ToInt64(jsonObject["taskId"]);
