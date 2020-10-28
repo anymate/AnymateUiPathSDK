@@ -23,7 +23,6 @@ steps:
     configuration: 'release'
     platform: 'Any CPU'
     clean: true
-    restoreNugetPackages: true
 
 - task: NuGetCommand@2
   displayName: 'NuGet pack'
