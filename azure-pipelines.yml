@@ -26,6 +26,10 @@ steps:
   inputs:
     command: pack
     versioningScheme: byPrereleaseNumber
+    packTimezone: 'utc'
+    majorVersion: '$(Major)'
+    minorVersion: '$(Minor)'
+    patchVersion: '$(Patch)'
     buildProperties: 'outputType=Library'
 
 - task: PublishBuildArtifacts@1
