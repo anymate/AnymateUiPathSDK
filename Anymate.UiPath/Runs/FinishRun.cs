@@ -1,4 +1,5 @@
-﻿using System.Activities;
+﻿using System;
+using System.Activities;
 using System.ComponentModel;
 using Anymate.UiPath.Models;
 
@@ -36,7 +37,9 @@ namespace Anymate.UiPath.Runs
         protected override void Execute(CodeActivityContext context)
         {
             _anymateClient = AnymateClient.Get(context);
-            
+            if (_anymateClient == null)
+                throw new Exception("AnymateClient is null");
+
             var runId = RunId.Get(context);
             var overwriteSeconds = OverwriteSecondsSaved.Get(context);
             var overwriteEntries = OverwriteEntries.Get(context);

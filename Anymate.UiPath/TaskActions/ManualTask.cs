@@ -1,4 +1,5 @@
-﻿using System.Activities;
+﻿using System;
+using System.Activities;
 using System.ComponentModel;
 using Anymate.UiPath.Models;
 
@@ -44,7 +45,9 @@ namespace Anymate.UiPath.TaskActions
         protected override void Execute(CodeActivityContext context)
         {
             _anymateClient = AnymateClient.Get(context);
-            
+            if (_anymateClient == null)
+                throw new Exception("AnymateClient is null");
+
             var taskId = TaskId.Get(context);
             var reason = Reason.Get(context);
             var newNote = Comment.Get(context);

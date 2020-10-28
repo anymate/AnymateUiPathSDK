@@ -31,7 +31,8 @@ namespace Anymate.UiPath.Setup
         protected override void Execute(CodeActivityContext context)
         {
             _anymateClient = AnymateClient.Get(context);
-            
+            if (_anymateClient == null)
+                throw new Exception("AnymateClient is null");
            
             var processKey = ProcessKey.Get(context);
             if(string.IsNullOrWhiteSpace(processKey))

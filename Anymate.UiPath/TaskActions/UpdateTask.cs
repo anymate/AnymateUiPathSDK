@@ -1,4 +1,5 @@
-﻿using System.Activities;
+﻿using System;
+using System.Activities;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Markup;
@@ -58,9 +59,8 @@ namespace Anymate.UiPath.TaskActions
         protected override void Execute(CodeActivityContext context)
         {
             _anymateClient = AnymateClient.Get(context);
-
-
-
+            if (_anymateClient == null)
+                throw new Exception("AnymateClient is null");
 
             var json = JsonPayload.Get(context);
             if (!string.IsNullOrWhiteSpace(json))

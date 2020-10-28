@@ -1,4 +1,5 @@
-﻿using System.Activities;
+﻿using System;
+using System.Activities;
 using System.ComponentModel;
 
 namespace Anymate.UiPath.Runs
@@ -25,7 +26,9 @@ namespace Anymate.UiPath.Runs
         protected override void Execute(CodeActivityContext context)
         {
             _anymateClient = AnymateClient.Get(context);
-            
+            if (_anymateClient == null)
+                throw new Exception("AnymateClient is null");
+
             var processKey = ProcessKey.Get(context);
             
             var jsonObject = _anymateClient.StartOrGetRun<Models.ApiNewRun>(processKey);
