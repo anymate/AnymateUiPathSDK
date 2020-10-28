@@ -7,12 +7,12 @@ namespace Anymate.UiPath.TaskActions
 {
     public class TakeNextTask : CodeActivity
     {
-        private IAnymateService _apiService;
+        private AnymateClient _anymateClient;
 
 
         [Category("Input")]
         [RequiredArgument]
-        public InArgument<IAnymateService> AnymateService { get; set; }
+        public InArgument<AnymateClient> AnymateClient { get; set; }
 
 
         [Category("Input")]
@@ -34,7 +34,7 @@ namespace Anymate.UiPath.TaskActions
 
         protected override void Execute(CodeActivityContext context)
         {
-            _apiService = AnymateService.Get(context);
+            _anymateClient = AnymateClient.Get(context);
             
             var processKey = ProcessKey.Get(context);
             if(string.IsNullOrWhiteSpace(processKey))
@@ -42,7 +42,7 @@ namespace Anymate.UiPath.TaskActions
                 throw new System.Exception("ProcessKey can't be null or empty.");
             }
 
-            var result = _apiService.TakeNext(processKey);
+            var result = _anymateClient.TakeNext(processKey);
             var jsonObject = JObject.Parse(result);
 
             var taskId = Convert.ToInt64(jsonObject["taskId"]);

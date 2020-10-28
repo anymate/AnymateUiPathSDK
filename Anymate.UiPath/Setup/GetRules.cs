@@ -7,12 +7,12 @@ namespace Anymate.UiPath.Setup
 {
     public class GetRules : CodeActivity
     {
-        private IAnymateService _apiService;
+        private AnymateClient _anymateClient;
 
 
         [Category("Input")]
         [RequiredArgument]
-        public InArgument<IAnymateService> AnymateService { get; set; }
+        public InArgument<AnymateClient> AnymateClient { get; set; }
 
 
         [Category("Input")]
@@ -30,7 +30,7 @@ namespace Anymate.UiPath.Setup
 
         protected override void Execute(CodeActivityContext context)
         {
-            _apiService = AnymateService.Get(context);
+            _anymateClient = AnymateClient.Get(context);
             
            
             var processKey = ProcessKey.Get(context);
@@ -39,7 +39,7 @@ namespace Anymate.UiPath.Setup
                 throw new Exception("ProcessKey can't be null or empty.");
             }
 
-            var result = _apiService.GetVariables(processKey);
+            var result = _anymateClient.GetRules(processKey);
             var jsonObject = JObject.Parse(result);
 
             JsonObject.Set(context, jsonObject);

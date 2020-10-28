@@ -6,12 +6,12 @@ namespace Anymate.UiPath.TaskActions
 {
     public class ErrorTask : CodeActivity
     {
-        private IAnymateService _apiService;
+        private AnymateClient _anymateClient;
 
 
         [Category("Input")]
         [RequiredArgument]
-        public InArgument<IAnymateService> AnymateService { get; set; }
+        public InArgument<AnymateClient> AnymateClient { get; set; }
 
 
         [Category("Input")]
@@ -41,7 +41,7 @@ namespace Anymate.UiPath.TaskActions
 
         protected override void Execute(CodeActivityContext context)
         {
-            _apiService = AnymateService.Get(context);
+            _anymateClient = AnymateClient.Get(context);
             
 
             var taskId = TaskId.Get(context);
@@ -61,7 +61,7 @@ namespace Anymate.UiPath.TaskActions
 
 
 
-            var jsonObject = _apiService.Error<ApiResponse, ApiAction>(apiAction);
+            var jsonObject = _anymateClient.Error<ApiResponse, ApiAction>(apiAction);
 
             Message.Set(context, jsonObject.Message);
             Succeeded.Set(context, jsonObject.Succeeded);

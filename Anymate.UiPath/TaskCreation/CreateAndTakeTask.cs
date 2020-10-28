@@ -9,12 +9,12 @@ namespace Anymate.UiPath.TaskCreation
 {
     public class CreateAndTakeTask : CodeActivity
     {
-        private IAnymateService _apiService;
+        private AnymateClient _anymateClient;
 
 
         [Category("Input")]
         [RequiredArgument]
-        public InArgument<IAnymateService> AnymateService { get; set; }
+        public InArgument<AnymateClient> AnymateClient { get; set; }
 
         [Category("Input - Json")]
         [OverloadGroup("OnlyJson")]
@@ -55,7 +55,7 @@ namespace Anymate.UiPath.TaskCreation
 
         protected override void Execute(CodeActivityContext context)
         {
-            _apiService = AnymateService.Get(context);
+            _anymateClient = AnymateClient.Get(context);
             var processKey = ProcessKey.Get(context);
             
 
@@ -76,7 +76,7 @@ namespace Anymate.UiPath.TaskCreation
             }
 
 
-            var result = _apiService.CreateAndTakeTask(json, processKey);
+            var result = _anymateClient.CreateAndTakeTask(json, processKey);
 
             var jsonResult = JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
             var taskId = Convert.ToInt64(jsonResult["taskId"]);

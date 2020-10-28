@@ -6,12 +6,12 @@ namespace Anymate.UiPath.Runs
 {
     public class OkToRun : CodeActivity
     {
-        private IAnymateService _apiService;
+        private AnymateClient _anymateClient;
 
 
         [Category("Input")]
         [RequiredArgument]
-        public InArgument<IAnymateService> AnymateService { get; set; }
+        public InArgument<AnymateClient> AnymateClient { get; set; }
 
 
         [Category("Input")]
@@ -25,11 +25,11 @@ namespace Anymate.UiPath.Runs
 
         protected override void Execute(CodeActivityContext context)
         {
-            _apiService = AnymateService.Get(context);
+            _anymateClient = AnymateClient.Get(context);
             
             var processKey = ProcessKey.Get(context);
             
-            var jsonObject = _apiService.OkToRun<ApiOkToRun>(processKey);
+            var jsonObject = _anymateClient.OkToRun<ApiOkToRun>(processKey);
 
             ItIsOkToRun.Set(context, jsonObject.OkToRun);
 

@@ -7,9 +7,15 @@ namespace Anymate.UiPath.Setup
     /// <summary>
     /// Will fetch a new access_token using the Resource Owner Password Grant flow.
     /// </summary>
-    public class InitializeClient : CodeActivity
+    public class InitializeClientOnPremises : CodeActivity
     {
-       
+        [Category("Input")]
+        [RequiredArgument]
+        public InArgument<string> ClientUri { get; set; }
+        [Category("Input")]
+        [RequiredArgument]
+        public InArgument<string> AuthUri { get; set; }
+
         [Category("Input")]
         [RequiredArgument]
         public InArgument<string> CustomerKey { get; set; }
@@ -37,7 +43,9 @@ namespace Anymate.UiPath.Setup
             var client_secret = Secret.Get(context);
             var username = Username.Get(context);
             var password = Password.Get(context);
-            var service = new AnymateClient(client_id, client_secret, username, password);
+            var client_uri = ClientUri.Get(context);
+            var auth_uri = AuthUri.Get(context);
+            var service = new AnymateClient(client_id, client_secret, username, password, client_id, auth_uri);
             AnymateService.Set(context, service);
 
         }

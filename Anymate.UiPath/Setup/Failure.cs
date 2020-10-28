@@ -6,12 +6,12 @@ namespace Anymate.UiPath.Runs
 {
     public class Failure : CodeActivity
     {
-        private IAnymateService _apiService;
+        private AnymateClient _anymateClient;
 
 
         [Category("Input")]
         [RequiredArgument]
-        public InArgument<IAnymateService> AnymateService { get; set; }
+        public InArgument<AnymateClient> AnymateClient { get; set; }
 
 
         [Category("Input")]
@@ -34,7 +34,7 @@ namespace Anymate.UiPath.Runs
 
         protected override void Execute(CodeActivityContext context)
         {
-            _apiService = AnymateService.Get(context);
+            _anymateClient = AnymateClient.Get(context);
             
            
             var processKey = ProcessKey.Get(context);
@@ -48,7 +48,7 @@ namespace Anymate.UiPath.Runs
             };
 
 
-            var jsonObject = _apiService.Failure<ApiResponse, ApiProcessFailure>(apiAction);
+            var jsonObject = _anymateClient.Failure<ApiResponse, ApiProcessFailure>(apiAction);
 
             Response.Set(context, jsonObject.Message);
             Succeeded.Set(context, jsonObject.Succeeded);

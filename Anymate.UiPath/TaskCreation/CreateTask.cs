@@ -10,12 +10,12 @@ namespace Anymate.UiPath.TaskCreation
 {
     public class CreateTask : CodeActivity
     {
-        private IAnymateService _apiService;
+        private AnymateClient _anymateClient;
 
 
         [Category("Input")]
         [RequiredArgument]
-        public InArgument<IAnymateService> AnymateService { get; set; }
+        public InArgument<AnymateClient> AnymateClient { get; set; }
 
         [Category("Input - Json")]
         [OverloadGroup("OnlyJson")]
@@ -51,7 +51,7 @@ namespace Anymate.UiPath.TaskCreation
         public OutArgument<bool> RefreshTokenAsap { get; set; }
         protected override void Execute(CodeActivityContext context)
         {
-            _apiService = AnymateService.Get(context);
+            _anymateClient = AnymateClient.Get(context);
             var processKey = ProcessKey.Get(context);
             if (string.IsNullOrWhiteSpace(processKey))
             {
@@ -72,7 +72,7 @@ namespace Anymate.UiPath.TaskCreation
                 json = JsonConvert.SerializeObject(dict);
             }
             
-            var result = _apiService.CreateTask<ApiResponse>(json, processKey);
+            var result = _anymateClient.CreateTask<ApiResponse>(json, processKey);
 
             Message.Set(context, result.Message);
             Succeeded.Set(context, result.Succeeded);

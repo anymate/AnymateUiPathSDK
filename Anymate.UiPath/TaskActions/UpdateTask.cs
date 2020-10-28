@@ -9,12 +9,12 @@ namespace Anymate.UiPath.TaskActions
 {
     public class UpdateTask : CodeActivity
     {
-        private IAnymateService _apiService;
+        private AnymateClient _anymateClient;
 
 
         [Category("Input")]
         [RequiredArgument]
-        public InArgument<IAnymateService> AnymateService { get; set; }
+        public InArgument<AnymateClient> AnymateClient { get; set; }
 
         [Category("Input - Json")]
         [OverloadGroup("OnlyJson")]
@@ -57,15 +57,15 @@ namespace Anymate.UiPath.TaskActions
 
         protected override void Execute(CodeActivityContext context)
         {
-            _apiService = AnymateService.Get(context);
-            
+            _anymateClient = AnymateClient.Get(context);
 
-                
+
+
 
             var json = JsonPayload.Get(context);
             if (!string.IsNullOrWhiteSpace(json))
             {
-                var result = _apiService.UpdateTask(json);
+                var result = _anymateClient.UpdateTask<ApiResponse>(json);
 
                 Message.Set(context, result.Message);
                 Succeeded.Set(context, result.Succeeded);
@@ -88,7 +88,7 @@ namespace Anymate.UiPath.TaskActions
                     dict[nameof(taskId)] = taskId.ToString();
                 }
                 var jsonPayload = JsonConvert.SerializeObject(dict);
-                var jsonObject = _apiService.UpdateTask<ApiResponse>(jsonPayload);
+                var jsonObject = _anymateClient.UpdateTask<ApiResponse>(jsonPayload);
                 Message.Set(context, jsonObject.Message);
                 Succeeded.Set(context, jsonObject.Succeeded);
 

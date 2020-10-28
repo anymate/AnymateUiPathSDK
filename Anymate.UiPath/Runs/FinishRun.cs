@@ -6,12 +6,12 @@ namespace Anymate.UiPath.Runs
 {
     public class FinishRun : CodeActivity
     {
-        private IAnymateService _apiService;
+        private AnymateClient _anymateClient;
 
 
         [Category("Input")]
         [RequiredArgument]
-        public InArgument<IAnymateService> AnymateService { get; set; }
+        public InArgument<AnymateClient> AnymateClient { get; set; }
 
 
         [Category("Input")]
@@ -35,13 +35,13 @@ namespace Anymate.UiPath.Runs
 
         protected override void Execute(CodeActivityContext context)
         {
-            _apiService = AnymateService.Get(context);
+            _anymateClient = AnymateClient.Get(context);
             
             var runId = RunId.Get(context);
             var overwriteSeconds = OverwriteSecondsSaved.Get(context);
             var overwriteEntries = OverwriteEntries.Get(context);
 
-            var jsonObject = _apiService.FinishRun<ApiResponse, ApiFinishRun>(new ApiFinishRun() { RunId = runId, OverwriteEntries= overwriteEntries, OverwriteSecondsSaved = overwriteSeconds });
+            var jsonObject = _anymateClient.FinishRun<ApiResponse, ApiFinishRun>(new ApiFinishRun() { RunId = runId, OverwriteEntries= overwriteEntries, OverwriteSecondsSaved = overwriteSeconds });
             Message.Set(context, jsonObject.Message);
             Succeeded.Set(context, jsonObject.Succeeded);
 

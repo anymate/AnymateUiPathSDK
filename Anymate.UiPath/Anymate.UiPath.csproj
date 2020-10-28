@@ -44,11 +44,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnymateClient.cs" />
+    <Compile Include="Helpers\AsyncUtil.cs" />
+    <Compile Include="Helpers\EpochExtensions.cs" />
+    <Compile Include="Helpers\TokenValidator.cs" />
+    <Compile Include="Models\AuthResponse.cs" />
+    <Compile Include="Models\AuthTokenRequest.cs" />
+    <Compile Include="Setup\InitializeClientOnPremises.cs" />
     <Compile Include="TaskCreation\CreateAndTakeTask.cs" />
-    <Compile Include="Runs\Failure.cs" />
+    <Compile Include="Setup\Failure.cs" />
     <Compile Include="Runs\FinishRun.cs" />
     <Compile Include="Setup\GetRules.cs" />
-    <Compile Include="Runs\OkToRun.cs" />
+    <Compile Include="Setup\OkToRun.cs" />
     <Compile Include="Runs\StartOrGetRun.cs" />
     <Compile Include="TaskActions\TakeNextTask.cs" />
     <Compile Include="TaskActions\RetryTask.cs" />
@@ -75,14 +82,11 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Anymate">
-      <Version>0.1.0-CI-20201018-095313</Version>
-    </PackageReference>
-    <PackageReference Include="Anymate.Client">
-      <Version>0.0.0.22</Version>
-    </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt">
+      <Version>6.8.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup />
