@@ -9,10 +9,6 @@ trigger:
 pool:
   vmImage: 'windows-latest'
 
-variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
 
 steps:
 - task: NuGetToolInstaller@1
@@ -22,9 +18,12 @@ steps:
     restoreSolution: '$(solution)'
 
 - task: VSBuild@1
-  displayName: 'Build solution **\*.sln'
   inputs:
-    vsVersion: 15.0
+    solution: '**\*.sln'
+    configuration: 'release'
+    platform: 'Any CPU'
+    clean: true
+    restoreNugetPackages: true
 
 - task: NuGetCommand@2
   displayName: 'NuGet pack'
