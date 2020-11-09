@@ -32,8 +32,6 @@ steps:
     patchVersion: '0'
     buildProperties: 'outputType=Library'
     includeReferencedProjects: true
-    includeNuGetOrg: true
-    includeSymbols: true
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: dotnet_uipath_lib_drop'
