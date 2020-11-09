@@ -271,3 +271,6 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/MigrationBackup/f52e2201/Anymate.UiPath/Anymate.UiPath.csproj
+/MigrationBackup/f52e2201/Anymate.UiPath/NuGetUpgradeLog.html
+/MigrationBackup/f52e2201/Anymate.UiPath/packages.config
