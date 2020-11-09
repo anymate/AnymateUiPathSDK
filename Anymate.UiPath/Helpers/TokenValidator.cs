@@ -2,7 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 
-namespace Anymate.UiPath.Helpers
+namespace Anymate.UiPath
 {
     public static class TokenValidator
     {

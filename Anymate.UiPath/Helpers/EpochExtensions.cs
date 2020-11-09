@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Anymate.UiPath.Helpers
+namespace Anymate.UiPath
 {
     public static class EpochTimeExtensions
     {

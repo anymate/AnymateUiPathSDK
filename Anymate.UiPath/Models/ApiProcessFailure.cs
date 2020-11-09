@@ -1,4 +1,4 @@
-﻿namespace Anymate.UiPath.Models
+﻿namespace Anymate.UiPath
 {
     public class ApiProcessFailure
     {

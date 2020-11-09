@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Windows.Markup;
 using Newtonsoft.Json;
 
-namespace Anymate.UiPath.TaskCreation
+namespace Anymate.UiPath
 {
     public class CreateAndTakeTask : CodeActivity
     {

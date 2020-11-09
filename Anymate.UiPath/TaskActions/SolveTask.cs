@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Activities;
 using System.ComponentModel;
-using Anymate.UiPath.Models;
 
-namespace Anymate.UiPath.TaskActions
+
+namespace Anymate.UiPath
 {
     public class SolveTask : CodeActivity
     {

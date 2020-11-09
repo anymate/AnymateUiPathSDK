@@ -2,7 +2,7 @@
 using System.Activities;
 using System.ComponentModel;
 
-namespace Anymate.UiPath.Runs
+namespace Anymate.UiPath
 {
     public class StartOrGetRun : CodeActivity
     {
@@ -31,7 +31,7 @@ namespace Anymate.UiPath.Runs
 
             var processKey = ProcessKey.Get(context);
             
-            var jsonObject = _anymateClient.StartOrGetRun<Models.ApiNewRun>(processKey);
+            var jsonObject = _anymateClient.StartOrGetRun<ApiNewRun>(processKey);
 
             RunId.Set(context, jsonObject.RunId);
 

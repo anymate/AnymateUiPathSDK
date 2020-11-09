@@ -2,7 +2,7 @@
 using System.Activities;
 using System.ComponentModel;
 
-namespace Anymate.UiPath.Helpers
+namespace Anymate.UiPath
 {
     public class GetUpdateTaskDictionary : CodeActivity
     {

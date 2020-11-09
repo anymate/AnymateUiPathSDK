@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Anymate.UiPath.Models
+namespace Anymate.UiPath
 {
     public class ApiOkToRun
     {

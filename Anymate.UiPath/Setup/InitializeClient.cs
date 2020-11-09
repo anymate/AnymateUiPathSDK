@@ -1,7 +1,7 @@
 ﻿using System.Activities;
 using System.ComponentModel;
 
-namespace Anymate.UiPath.Setup
+namespace Anymate.UiPath
 {
 
     /// <summary>

@@ -3,7 +3,7 @@ using System.Activities;
 using System.ComponentModel;
 using Newtonsoft.Json.Linq;
 
-namespace Anymate.UiPath.TaskActions
+namespace Anymate.UiPath
 {
     public class TakeNextTask : CodeActivity
     {

@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Anymate.UiPath.Helpers
+namespace Anymate.UiPath
 {
     /// <summary>
     /// Helper class to run async methods within a sync process.

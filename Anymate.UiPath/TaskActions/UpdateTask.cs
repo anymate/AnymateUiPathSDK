@@ -3,10 +3,10 @@ using System.Activities;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Markup;
-using Anymate.UiPath.Models;
+
 using Newtonsoft.Json;
 
-namespace Anymate.UiPath.TaskActions
+namespace Anymate.UiPath
 {
     public class UpdateTask : CodeActivity
     {

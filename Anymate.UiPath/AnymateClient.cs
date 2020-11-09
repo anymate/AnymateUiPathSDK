@@ -5,8 +5,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using Anymate.UiPath.Helpers;
-using Anymate.UiPath.Models;
+using Anymate.UiPath;
+
 using Newtonsoft.Json;
 
 namespace Anymate.UiPath
