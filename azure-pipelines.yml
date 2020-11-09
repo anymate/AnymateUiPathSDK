@@ -17,10 +17,9 @@ steps:
   inputs:
     restoreSolution: '**/*.sln'
 
-- task: MSBuild@1
+- task: VSBuild@1
   inputs:
-    solution: '**/*.sln'
-    platform: 'Mixed Platforms'
+    solution: '**\*.sln'
 
 - task: NuGetCommand@2
   displayName: 'NuGet pack'
