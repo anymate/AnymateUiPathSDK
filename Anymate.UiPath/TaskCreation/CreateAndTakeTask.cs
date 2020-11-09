@@ -49,9 +49,6 @@ namespace Anymate.UiPath
 
         [Category("Output - FlowControl")]
         public OutArgument<bool> Succeeded { get; set; }
-        [Category("Output - FlowControl")]
-        [DefaultValue(false)]
-        public OutArgument<bool> RefreshTokenAsap { get; set; }
 
         protected override void Execute(CodeActivityContext context)
         {
