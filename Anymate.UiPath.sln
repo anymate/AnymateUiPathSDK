@@ -5,6 +5,11 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anymate.UiPath", "Anymate.UiPath\Anymate.UiPath.csproj", "{9D3BBEDF-7111-4A72-B696-C6139304096F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B923CEF3-52C9-4CD1-8850-A48C018FEBF3}"
+	ProjectSection(SolutionItems) = preProject
+		Anymate.UiPath\packages.config = Anymate.UiPath\packages.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
