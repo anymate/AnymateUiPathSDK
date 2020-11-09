@@ -53,11 +53,11 @@
     <Compile Include="Setup\InitializeClientOnPremises.cs" />
     <Compile Include="TaskCreation\CreateAndTakeTask.cs" />
     <Compile Include="Setup\Failure.cs" />
-    <Compile Include="Runs\FinishRun.cs" />
+    <Compile Include="Setup\FinishRun.cs" />
     <Compile Include="Setup\GetRules.cs" />
     <Compile Include="Setup\OkToRun.cs" />
-    <Compile Include="Runs\StartOrGetRun.cs" />
-    <Compile Include="TaskActions\TakeNextTask.cs" />
+    <Compile Include="Setup\StartOrGetRun.cs" />
+    <Compile Include="TakeTask\TakeNextTask.cs" />
     <Compile Include="TaskActions\RetryTask.cs" />
     <Compile Include="TaskActions\ErrorTask.cs" />
     <Compile Include="TaskActions\ManualTask.cs" />
