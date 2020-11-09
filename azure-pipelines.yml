@@ -16,10 +16,12 @@ steps:
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '**/*.sln'
+    
 
 - task: MSBuild@1
   inputs:
     solution: '**/*.sln'
+    msbuildArchitecture: 'x64'
 
 - task: NuGetCommand@2
   displayName: 'NuGet pack'
