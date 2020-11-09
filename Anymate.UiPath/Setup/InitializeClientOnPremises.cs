@@ -33,7 +33,7 @@ namespace Anymate.UiPath.Setup
 
         
         [Category("Output")]
-        public OutArgument<AnymateClient> AnymateService { get; set; }
+        public OutArgument<AnymateClient> AnymateClient { get; set; }
        
 
         protected override void Execute(CodeActivityContext context)
@@ -46,7 +46,7 @@ namespace Anymate.UiPath.Setup
             var client_uri = ClientUri.Get(context);
             var auth_uri = AuthUri.Get(context);
             var service = new AnymateClient(client_id, client_secret, username, password, client_id, auth_uri);
-            AnymateService.Set(context, service);
+            AnymateClient.Set(context, service);
 
         }
     }
