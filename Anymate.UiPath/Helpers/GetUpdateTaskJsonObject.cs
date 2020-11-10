@@ -1,16 +1,16 @@
-﻿using System.Activities;
+﻿using Newtonsoft.Json.Linq;
+using System.Activities;
 using System.ComponentModel;
-using Newtonsoft.Json.Linq;
 
 namespace Anymate.UiPath.Helpers
 {
-    public class GetCreateTaskJObject : CodeActivity
+    public class GetUpdateTaskJsonObject : CodeActivity
     {
 
         [Category("Input")]
         [DefaultValue(null)]
         [RequiredArgument]
-        public InArgument<string> ProcessKey { get; set; }
+        public InArgument<long> TaskId { get; set; }
 
         [Category("Input - Optional")]
         public InArgument<string> Comment { get; set; }
@@ -23,8 +23,9 @@ namespace Anymate.UiPath.Helpers
         protected override void Execute(CodeActivityContext context)
         {
             var dict = new JObject();
-            var processKey = ProcessKey.Get(context);
-            dict.Add(nameof(processKey), processKey);
+            var taskId = TaskId.Get(context);
+            dict.Add(nameof(taskId), taskId);
+
             var newNote = Comment.Get(context);
             if(!string.IsNullOrWhiteSpace(newNote))
             {

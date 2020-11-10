@@ -64,11 +64,11 @@
     <Compile Include="Tasks\SolveTask.cs" />
     <Compile Include="Tasks\UpdateTask.cs" />
     <Compile Include="General\InitializeClient.cs" />
-    <Compile Include="Helpers\AddOrUpdateDictionary.cs" />
-    <Compile Include="Helpers\GetCreateTaskDictionary.cs" />
+    <Compile Include="Helpers\AddOrUpdateJsonObject.cs" />
+    <Compile Include="Helpers\GetCreateTaskJsonObject.cs" />
     <Compile Include="Helpers\GetListFromJson.cs" />
     <Compile Include="Helpers\GetTableFromJson.cs" />
-    <Compile Include="Helpers\GetUpdateTaskDictionary.cs" />
+    <Compile Include="Helpers\GetUpdateTaskJsonObject.cs" />
     <Compile Include="Models\ApiAction.cs" />
     <Compile Include="Models\ApiFinishRun.cs" />
     <Compile Include="Models\ApiNewRun.cs" />

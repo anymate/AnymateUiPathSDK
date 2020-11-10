@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace Anymate.UiPath.Helpers
 {
-    public class AddOrUpdateJObject : CodeActivity
+    public class AddOrUpdateJsonObject : CodeActivity
     {
 
         [Category("Misc")]
