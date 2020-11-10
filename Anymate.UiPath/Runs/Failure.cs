@@ -3,7 +3,7 @@ using System.Activities;
 using System.ComponentModel;
 
 
-namespace Anymate.UiPath
+namespace Anymate.UiPath.Runs
 {
     public class Failure : CodeActivity
     {

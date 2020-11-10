@@ -3,9 +3,9 @@ using System.Activities;
 using System.ComponentModel;
 
 
-namespace Anymate.UiPath
+namespace Anymate.UiPath.Runs
 {
-    public class RetryTask : CodeActivity
+    public class FinishRun : CodeActivity
     {
         private AnymateClient _anymateClient;
 
@@ -18,15 +18,8 @@ namespace Anymate.UiPath
         [Category("Input")]
         [RequiredArgument]
         [DefaultValue(null)]
-        public InArgument<long> TaskId { get; set; }
+        public InArgument<long> RunId { get; set; }
 
-        [Category("Input")]
-        [DefaultValue(null)]
-        public InArgument<string> Reason { get; set; }
-
-        [Category("Input")]
-        [DefaultValue(null)]
-        public InArgument<string> Comment { get; set; }
         [Category("Input - KPI Overrides")]
         [DefaultValue(null)]
         public InArgument<int?> OverwriteEntries { get; set; }
@@ -40,30 +33,18 @@ namespace Anymate.UiPath
         [Category("Output - FlowControl")]
         public OutArgument<bool> Succeeded { get; set; }
 
+
         protected override void Execute(CodeActivityContext context)
         {
             _anymateClient = AnymateClient.Get(context);
             if (_anymateClient == null)
                 throw new Exception("AnymateClient is null");
 
-            var taskId = TaskId.Get(context);
-            var reason = Reason.Get(context);
-            var newNote = Comment.Get(context);
-            var overwriteSecondsSaved = OverwriteSecondsSaved.Get(context);
+            var runId = RunId.Get(context);
+            var overwriteSeconds = OverwriteSecondsSaved.Get(context);
             var overwriteEntries = OverwriteEntries.Get(context);
 
-            var apiAction = new ApiAction()
-            {
-                Reason = reason,
-                TaskId = taskId,
-                Comment = newNote,
-                OverwriteEntries = overwriteEntries,
-                OverwriteSecondsSaved = overwriteSecondsSaved
-            };
-
-
-
-            var jsonObject = _anymateClient.Retry<ApiResponse, ApiAction>(apiAction);
+            var jsonObject = _anymateClient.FinishRun<ApiResponse, ApiFinishRun>(new ApiFinishRun() { RunId = runId, OverwriteEntries= overwriteEntries, OverwriteSecondsSaved = overwriteSeconds });
             Message.Set(context, jsonObject.Message);
             Succeeded.Set(context, jsonObject.Succeeded);
 

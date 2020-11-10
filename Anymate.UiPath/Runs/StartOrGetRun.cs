@@ -2,10 +2,9 @@
 using System.Activities;
 using System.ComponentModel;
 
-
-namespace Anymate.UiPath
+namespace Anymate.UiPath.Runs
 {
-    public class OkToRun : CodeActivity
+    public class StartOrGetRun : CodeActivity
     {
         private AnymateClient _anymateClient;
 
@@ -21,7 +20,7 @@ namespace Anymate.UiPath
         public InArgument<string> ProcessKey { get; set; }
 
         [Category("Output")]
-        public OutArgument<bool> ItIsOkToRun { get; set; }
+        public OutArgument<long> RunId { get; set; }
 
 
         protected override void Execute(CodeActivityContext context)
@@ -32,9 +31,9 @@ namespace Anymate.UiPath
 
             var processKey = ProcessKey.Get(context);
             
-            var jsonObject = _anymateClient.OkToRun<ApiOkToRun>(processKey);
+            var jsonObject = _anymateClient.StartOrGetRun<ApiNewRun>(processKey);
 
-            ItIsOkToRun.Set(context, jsonObject.OkToRun);
+            RunId.Set(context, jsonObject.RunId);
 
         }
     }

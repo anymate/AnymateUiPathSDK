@@ -2,7 +2,7 @@
 using System.Activities;
 using System.ComponentModel;
 
-namespace Anymate.UiPath
+namespace Anymate.UiPath.Helpers
 {
     public class AddOrUpdateJObject : CodeActivity
     {

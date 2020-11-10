@@ -3,9 +3,9 @@ using System.Activities;
 using System.ComponentModel;
 
 
-namespace Anymate.UiPath
+namespace Anymate.UiPath.Tasks
 {
-    public class ErrorTask : CodeActivity
+    public class SolveTask : CodeActivity
     {
         private AnymateClient _anymateClient;
 
@@ -40,6 +40,7 @@ namespace Anymate.UiPath
         [Category("Output - FlowControl")]
         public OutArgument<bool> Succeeded { get; set; }
 
+
         protected override void Execute(CodeActivityContext context)
         {
             _anymateClient = AnymateClient.Get(context);
@@ -63,8 +64,8 @@ namespace Anymate.UiPath
 
 
 
-            var jsonObject = _anymateClient.Error<ApiResponse, ApiAction>(apiAction);
-
+            var jsonObject = _anymateClient.Solved<ApiResponse, ApiAction>(apiAction);
+            
             Message.Set(context, jsonObject.Message);
             Succeeded.Set(context, jsonObject.Succeeded);
 

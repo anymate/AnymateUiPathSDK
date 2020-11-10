@@ -3,9 +3,9 @@ using System.Activities;
 using System.ComponentModel;
 
 
-namespace Anymate.UiPath
+namespace Anymate.UiPath.Tasks
 {
-    public class SolveTask : CodeActivity
+    public class ManualTask : CodeActivity
     {
         private AnymateClient _anymateClient;
 
@@ -27,6 +27,7 @@ namespace Anymate.UiPath
         [Category("Input")]
         [DefaultValue(null)]
         public InArgument<string> Comment { get; set; }
+
         [Category("Input - KPI Overrides")]
         [DefaultValue(null)]
         public InArgument<int?> OverwriteEntries { get; set; }
@@ -35,11 +36,11 @@ namespace Anymate.UiPath
         [DefaultValue(null)]
         public InArgument<int?> OverwriteSecondsSaved { get; set; }
 
+
         [Category("Output - FlowControl")]
         public OutArgument<string> Message { get; set; }
         [Category("Output - FlowControl")]
         public OutArgument<bool> Succeeded { get; set; }
-
 
         protected override void Execute(CodeActivityContext context)
         {
@@ -50,6 +51,7 @@ namespace Anymate.UiPath
             var taskId = TaskId.Get(context);
             var reason = Reason.Get(context);
             var newNote = Comment.Get(context);
+
             var overwriteSecondsSaved = OverwriteSecondsSaved.Get(context);
             var overwriteEntries = OverwriteEntries.Get(context);
 
@@ -62,9 +64,8 @@ namespace Anymate.UiPath
                 OverwriteSecondsSaved = overwriteSecondsSaved
             };
 
-
-
-            var jsonObject = _anymateClient.Solved<ApiResponse, ApiAction>(apiAction);
+  
+            var jsonObject = _anymateClient.Manual<ApiResponse, ApiAction>(apiAction);
             
             Message.Set(context, jsonObject.Message);
             Succeeded.Set(context, jsonObject.Succeeded);

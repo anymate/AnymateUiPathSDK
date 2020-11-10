@@ -44,26 +44,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnymateClient.cs" />
-    <Compile Include="Helpers\AsyncUtil.cs" />
-    <Compile Include="Helpers\EpochExtensions.cs" />
-    <Compile Include="Helpers\TokenValidator.cs" />
+    <Compile Include="Utilities\AnymateClient.cs" />
+    <Compile Include="Utilities\AsyncUtil.cs" />
+    <Compile Include="Utilities\EpochExtensions.cs" />
+    <Compile Include="Utilities\TokenValidator.cs" />
     <Compile Include="Models\AuthResponse.cs" />
     <Compile Include="Models\AuthTokenRequest.cs" />
-    <Compile Include="Setup\InitializeClientOnPremises.cs" />
-    <Compile Include="TaskCreation\CreateAndTakeTask.cs" />
-    <Compile Include="Setup\Failure.cs" />
-    <Compile Include="Setup\FinishRun.cs" />
-    <Compile Include="Setup\GetRules.cs" />
-    <Compile Include="Setup\OkToRun.cs" />
-    <Compile Include="Setup\StartOrGetRun.cs" />
-    <Compile Include="TakeTask\TakeNextTask.cs" />
-    <Compile Include="TaskActions\RetryTask.cs" />
-    <Compile Include="TaskActions\ErrorTask.cs" />
-    <Compile Include="TaskActions\ManualTask.cs" />
-    <Compile Include="TaskActions\SolveTask.cs" />
-    <Compile Include="TaskActions\UpdateTask.cs" />
-    <Compile Include="Setup\InitializeClient.cs" />
+    <Compile Include="General\InitializeClientOnPremises.cs" />
+    <Compile Include="Tasks\CreateAndTakeTask.cs" />
+    <Compile Include="Runs\Failure.cs" />
+    <Compile Include="Runs\FinishRun.cs" />
+    <Compile Include="Rules\GetRules.cs" />
+    <Compile Include="Runs\OkToRun.cs" />
+    <Compile Include="Runs\StartOrGetRun.cs" />
+    <Compile Include="Tasks\TakeNextTask.cs" />
+    <Compile Include="Tasks\RetryTask.cs" />
+    <Compile Include="Tasks\ErrorTask.cs" />
+    <Compile Include="Tasks\ManualTask.cs" />
+    <Compile Include="Tasks\SolveTask.cs" />
+    <Compile Include="Tasks\UpdateTask.cs" />
+    <Compile Include="General\InitializeClient.cs" />
     <Compile Include="Helpers\AddOrUpdateDictionary.cs" />
     <Compile Include="Helpers\GetCreateTaskDictionary.cs" />
     <Compile Include="Helpers\GetListFromJson.cs" />
@@ -76,7 +76,7 @@
     <Compile Include="Models\ApiProcessFailure.cs" />
     <Compile Include="Models\ApiResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TaskCreation\CreateTask.cs" />
+    <Compile Include="Tasks\CreateTask.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json">

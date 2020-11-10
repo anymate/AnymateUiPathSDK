@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using Newtonsoft.Json.Linq;
 
-namespace Anymate.UiPath
+namespace Anymate.UiPath.Helpers
 {
     public class GetCreateTaskJObject : CodeActivity
     {
