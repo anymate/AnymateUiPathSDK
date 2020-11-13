@@ -12,7 +12,7 @@ namespace Anymate.UiPath.General
        
         [Category("Input")]
         [RequiredArgument]
-        public InArgument<string> CustomerKey { get; set; }
+        public InArgument<string> ClientId { get; set; }
 
         [Category("Input")]
         [RequiredArgument]
@@ -33,7 +33,7 @@ namespace Anymate.UiPath.General
         protected override void Execute(CodeActivityContext context)
         {
             
-            var client_id = CustomerKey.Get(context);
+            var client_id = ClientId.Get(context);
             var client_secret = Secret.Get(context);
             var username = Username.Get(context);
             var password = Password.Get(context);

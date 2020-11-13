@@ -55,12 +55,12 @@ namespace Anymate.UiPath
         /// <remarks>
         /// No need for any further configuration, as the Anymate Client automatically will setup itself once you log in.
         /// </remarks>
-        public AnymateClient(string customerKey, string secret, string username, string password)
+        public AnymateClient(string clientId, string secret, string username, string password)
         {
             OnPremisesMode = false;
             _request = new AuthTokenRequest()
             {
-                client_id = customerKey,
+                client_id = clientId,
                 client_secret = secret,
                 password = password,
                 username = username
@@ -77,13 +77,13 @@ namespace Anymate.UiPath
         /// </remarks>
         /// <param name="clientUri">The url for the anymate client installation. Url should just be the domain with http/https in front, similar to "https://customer.anymate.app"</param>
         /// <param name="authUri">The url for the anymate auth server installation. Url should just be the domain with http/https in front, similar to "https://customer.auth.anymate.app"</param>
-        public AnymateClient(string customerKey, string secret, string username, string password, string clientUri,
+        public AnymateClient(string clientId, string secret, string username, string password, string clientUri,
             string authUri)
         {
             OnPremisesMode = true;
             _request = new AuthTokenRequest()
             {
-                client_id = customerKey,
+                client_id = clientId,
                 client_secret = secret,
                 password = password,
                 username = username
