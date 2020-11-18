@@ -11,11 +11,16 @@ Anymate UiPath SDK is made for UiPath, which relies on .NET Framework 4.6.1.
 ## Links
 The SDK is available as open source and can be found on [our github page][githublink]. 
 
-We have also published it at [nuget.org][nugetlink]. Installing the Anymate package is done in *UiPath Studio* from the [Package Manager][uipath_managingpackages] by searching for 
-`Anymate.UiPath`.
+We have also published it at [nuget.org][nugetlink]. 
 
 
 ## Setup
+
+Installing the Anymate package is done in *UiPath Studio* from the [Package Manager][uipath_managingpackages] by searching for 
+`Anymate.UiPath`.
+
+![Package Manager][packagemanager]
+
 Once installed, Anymate will have a seperate entry in the Activities tab, with the different activities grouped into `General`, `Helpers`, `Rules`, `Runs` and `Tasks`.
 
 ![Activities tab][activitiestab]
@@ -60,3 +65,4 @@ Once the **Task Loop** has completed, the **All Done** state takes care of clean
 [activitiestab]: /readme_assets/img/activities_anymate.png
 [example]: /readme_assets/img/example3.png
 [statemachine_example]: /readme_assets/img/example_statemachine.png
+[packagemanager]: /readme_assets/img/package_manager.png
