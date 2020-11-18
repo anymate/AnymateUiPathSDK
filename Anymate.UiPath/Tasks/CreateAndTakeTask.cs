@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Markup;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Anymate.UiPath.Tasks
 {
@@ -42,7 +43,9 @@ namespace Anymate.UiPath.Tasks
         public InArgument<string> Comment { get; set; }
 
         [Category("Output - Data")]
-        public OutArgument<string> GetTask { get; set; }
+        public OutArgument<JObject> GetTask { get; set; }
+        [Category("Output - Data")]
+        public OutArgument<string> GetTaskAsJson { get; set; }
 
         [Category("Output - Data")]
         public OutArgument<long> TaskId { get; set; }
@@ -78,10 +81,11 @@ namespace Anymate.UiPath.Tasks
 
             var result = _anymateClient.CreateAndTakeTask(json, processKey);
 
-            var jsonResult = JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
-            var taskId = Convert.ToInt64(jsonResult["taskId"]);
+            var jsonObject = JObject.Parse(result);
+            var taskId = Convert.ToInt64(jsonObject["taskId"]);
             TaskId.Set(context, taskId);
-            GetTask.Set(context, result);
+            GetTask.Set(context, jsonObject);
+            GetTaskAsJson.Set(context, result);
             Succeeded.Set(context, taskId > 0);
 
         }
