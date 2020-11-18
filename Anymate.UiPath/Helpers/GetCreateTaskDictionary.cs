@@ -6,7 +6,7 @@ using System;
 
 namespace Anymate.UiPath.Helpers
 {
-    public class GetCreateTaskJsonObject : CodeActivity
+    public class GetCreateTaskDictionary : CodeActivity
     {
 
         [Category("Input - Optional")]

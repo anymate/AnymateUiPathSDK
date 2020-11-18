@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace Anymate.UiPath.Helpers
 {
-    public class GetUpdateTaskJsonObject : CodeActivity
+    public class GetUpdateTaskDictionary : CodeActivity
     {
 
         [Category("Input")]
