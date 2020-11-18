@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Activities;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Anymate.UiPath.Helpers
@@ -24,7 +25,7 @@ namespace Anymate.UiPath.Helpers
         {
             var dict = new Dictionary<string,string>();
             var taskId = TaskId.Get(context);
-            dict.Add(nameof(taskId), taskId);
+            dict.Add(nameof(taskId), taskId.ToString());
 
             var newNote = Comment.Get(context);
             if(!string.IsNullOrWhiteSpace(newNote))
