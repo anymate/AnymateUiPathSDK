@@ -1,11 +1,12 @@
 ﻿using System.Activities;
 using System.ComponentModel;
 using Newtonsoft.Json.Linq;
-using System.DateTime;
+using System.Collections.Generic;
+using System;
 
 namespace Anymate.UiPath.Helpers
 {
-    public class GetCreateTaskJsonObject : CodeActivity
+    public class GetCreateTaskDictionary : CodeActivity
     {
 
         [Category("Input - Optional")]
@@ -33,7 +34,7 @@ namespace Anymate.UiPath.Helpers
             var activationDate = ActivationDate.Get(context);
             if(activationDate != null)
             {
-                dict.Add("activationDate", activationDate.ToString("s"))
+                dict.Add("activationDate", activationDate?.ToString("s"));
             }
 
             Dict.Set(context, dict);
