@@ -1,5 +1,11 @@
 # UiPath SDK
 
+---
+
+**In order to use this library, you need to have an Anymate account. Please visit [anymate.io](https://www.anymate.io) for more information.**
+
+---
+
 Anymate UiPath SDK is made for UiPath, which relies on .NET Framework 4.6.1. 
 
 ## Links
