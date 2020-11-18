@@ -25,9 +25,6 @@ Once installed, Anymate will have a seperate entry in the Activities tab, with t
 
 ![Activities tab][activitiestab]
 
-!!! tip "Helpers are small functions to ease work"
-    We made a few helper functions and included them in the library, as we saw a need for them while making our own robots.
-
 In the `Anymate.UiPath` SDK, always make sure to call `Initialize Client` to get the `AnymateClient` object before using the other functions. 
 
 In order to make it as easy as possible to work with the Task objects that differ from Process to Process, when `Anymate.UiPath` returns a dynamic object (e.g. `TakeNext` or `GetRules`) then it will use Newtonsoft.Json to make a JObject.
