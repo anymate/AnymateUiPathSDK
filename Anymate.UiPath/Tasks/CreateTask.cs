@@ -46,6 +46,9 @@ namespace Anymate.UiPath.Tasks
         public OutArgument<string> Message { get; set; }
         [Category("Output - FlowControl")]
         public OutArgument<bool> Succeeded { get; set; }
+        [Category("Output - FlowControl")]
+        public OutArgument<long> CreatedTaskId { get; set; }
+
         protected override void Execute(CodeActivityContext context)
         {
             _anymateClient = AnymateClient.Get(context);
@@ -72,10 +75,11 @@ namespace Anymate.UiPath.Tasks
                 json = JsonConvert.SerializeObject(dict);
             }
             
-            var result = _anymateClient.CreateTask<ApiResponse>(json, processKey);
+            var result = _anymateClient.CreateTask<ApiCreateTaskResponse>(json, processKey);
 
             Message.Set(context, result.Message);
             Succeeded.Set(context, result.Succeeded);
+            CreatedTaskId.Set(context, result.TaskId);
         }
     }
 }

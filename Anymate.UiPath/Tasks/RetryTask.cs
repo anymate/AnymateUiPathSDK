@@ -27,6 +27,11 @@ namespace Anymate.UiPath.Tasks
         [Category("Input")]
         [DefaultValue(null)]
         public InArgument<string> Comment { get; set; }
+
+        [Category("Input")]
+        [DefaultValue(null)]
+        public InArgument<DateTimeOffset?> ActivationDate { get; set; }
+
         [Category("Input - KPI Overrides")]
         [DefaultValue(null)]
         public InArgument<int?> OverwriteEntries { get; set; }
@@ -49,21 +54,23 @@ namespace Anymate.UiPath.Tasks
             var taskId = TaskId.Get(context);
             var reason = Reason.Get(context);
             var newNote = Comment.Get(context);
+            var activationDate = ActivationDate.Get(context);
             var overwriteSecondsSaved = OverwriteSecondsSaved.Get(context);
             var overwriteEntries = OverwriteEntries.Get(context);
 
-            var apiAction = new ApiAction()
+            var apiAction = new ApiRetryAction()
             {
                 Reason = reason,
                 TaskId = taskId,
                 Comment = newNote,
                 OverwriteEntries = overwriteEntries,
-                OverwriteSecondsSaved = overwriteSecondsSaved
+                OverwriteSecondsSaved = overwriteSecondsSaved,
+                ActivationDate = activationDate
             };
 
 
 
-            var jsonObject = _anymateClient.Retry<ApiResponse, ApiAction>(apiAction);
+            var jsonObject = _anymateClient.Retry<ApiResponse, ApiRetryAction>(apiAction);
             Message.Set(context, jsonObject.Message);
             Succeeded.Set(context, jsonObject.Succeeded);
 
