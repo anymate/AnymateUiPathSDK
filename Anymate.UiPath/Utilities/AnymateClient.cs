@@ -337,6 +337,14 @@ namespace Anymate.UiPath
             return JsonConvert.DeserializeObject<TResponse>(response);
         }
 
+        public TResponse CreateTasks<TResponse>(string payload, string processKey)
+        {
+            var endpoint = $"/api/CreateTasks/{processKey}";
+            var response = CallApiPost(endpoint, payload);
+            return JsonConvert.DeserializeObject<TResponse>(response);
+        }
+
+
         public TResponse UpdateTask<TResponse>(string payload)
         {
             var endpoint = $"/api/UpdateTask/";

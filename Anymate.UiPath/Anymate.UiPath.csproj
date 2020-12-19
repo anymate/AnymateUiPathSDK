@@ -46,8 +46,10 @@
   <ItemGroup>
     <Compile Include="Helpers\GetCreateTaskDictionary.cs" />
     <Compile Include="Helpers\GetUpdateTaskDictionary.cs" />
+    <Compile Include="Models\ApiCreateTasksResponse.cs" />
     <Compile Include="Models\ApiRetryAction.cs" />
     <Compile Include="Models\ApiCreateTaskResponse.cs" />
+    <Compile Include="Tasks\CreateTasks.cs" />
     <Compile Include="Utilities\AnymateClient.cs" />
     <Compile Include="Utilities\AsyncUtil.cs" />
     <Compile Include="Utilities\EpochExtensions.cs" />

@@ -2,6 +2,7 @@
 using System.Activities;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Windows.Markup;
 
@@ -10,7 +11,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Anymate.UiPath.Tasks
 {
-    public class CreateTask : CodeActivity
+    public class CreateTasks : CodeActivity
     {
         private AnymateClient _anymateClient;
 
@@ -25,32 +26,33 @@ namespace Anymate.UiPath.Tasks
         [RequiredArgument]
         public InArgument<string> JsonPayload { get; set; }
 
-
-        [Category("Input - Dictionary")]
+        [Category("Input - DataTable")]
         [OverloadGroup("OnlyJObject")]
         [DefaultValue(null)]
         [RequiredArgument]
-        public InArgument<Dictionary<string, string>> DictPayload { get; set; }
+        public InArgument<DataTable> DatatablePayload { get; set; }
+
+        [Category("Input - List")]
+        [OverloadGroup("OnlyList")]
+        [DefaultValue(null)]
+        [RequiredArgument]
+        public InArgument<IEnumerable<object>> ListPayload { get; set; }
 
         [Category("Input")]
         [OverloadGroup("OnlyJObject")]
         [OverloadGroup("OnlyJson")]
+        [OverloadGroup("OnlyList")]
         [RequiredArgument]
         [DefaultValue(null)]
         public InArgument<string> ProcessKey { get; set; }
 
-        [Category("Input - Dictionary")]
-        [OverloadGroup("OnlyJObject")]
-        [DefaultValue(null)]
-        [DependsOn("DictPayload")]
-        public InArgument<string> Comment { get; set; }
 
         [Category("Output - FlowControl")]
         public OutArgument<string> Message { get; set; }
         [Category("Output - FlowControl")]
         public OutArgument<bool> Succeeded { get; set; }
         [Category("Output - FlowControl")]
-        public OutArgument<long> CreatedTaskId { get; set; }
+        public OutArgument<List<long>> CreatedTaskIdList { get; set; }
 
         protected override void Execute(CodeActivityContext context)
         {
@@ -64,46 +66,52 @@ namespace Anymate.UiPath.Tasks
                 throw new Exception("Processkey missing");
             }
 
+            var datatable = DatatablePayload.Get(context);
             var json = JsonPayload.Get(context);
             var jsonEmpty = string.IsNullOrWhiteSpace(json);
             if (jsonEmpty)
             {
-                var dict = DictPayload.Get(context);
-
-                var comment = Comment.Get(context);
-                if (!string.IsNullOrWhiteSpace(comment))
+                var dict = DatatablePayload.Get(context);
+                if (dict == null)
                 {
-                    dict[nameof(comment)] = comment;
+                    var list = ListPayload.Get(context);
+                    json = JsonConvert.SerializeObject(list);
+                }
+                else
+                {
+                    json = JsonConvert.SerializeObject(datatable);
                 }
 
-                json = JsonConvert.SerializeObject(dict);
-            }
 
-            var useCreateTask = true;
+            }
+            var useCreateTasks = true;
             if (!jsonEmpty)
             {
                 var token = JToken.Parse(json);
-                if (token is JArray)
+                if (token is JObject)
                 {
-                    useCreateTask = false;
+                    useCreateTasks = false;
                 }
             }
 
-            if (useCreateTask)
-            {
-                var result = _anymateClient.CreateTask<ApiCreateTaskResponse>(json, processKey);
-
-                Message.Set(context, result.Message);
-                Succeeded.Set(context, result.Succeeded);
-                CreatedTaskId.Set(context, result.TaskId);
-            }
-            else
+            if (useCreateTasks)
             {
                 var result = _anymateClient.CreateTasks<ApiCreateTasksResponse>(json, processKey);
                 Message.Set(context, result.Message);
                 Succeeded.Set(context, result.Succeeded);
-                CreatedTaskId.Set(context, result.TaskIds.FirstOrDefault());
+                CreatedTaskIdList.Set(context, result.TaskIds);
             }
+            else
+            {
+                var result = _anymateClient.CreateTask<ApiCreateTaskResponse>(json, processKey);
+                Message.Set(context, result.Message);
+                Succeeded.Set(context, result.Succeeded);
+                CreatedTaskIdList.Set(context, new List<long>() { result.TaskId });
+            }
+
+
         }
+
     }
 }
+
