@@ -5,24 +5,26 @@ using Newtonsoft.Json.Linq;
 
 namespace Anymate.UiPath.Rules
 {
+    [Description("Will fetch all rules for a given Process.")]
     public class GetRules : CodeActivity
     {
         private AnymateClient _anymateClient;
 
-
+        [Description("Make sure to initiate your AnymateClient and pass the return object along before calling this activity.")]
         [Category("Input")]
         [RequiredArgument]
         public InArgument<AnymateClient> AnymateClient { get; set; }
 
-
+        [Description("Which Process to get rules for.")]
         [Category("Input")]
         [RequiredArgument]
         [DefaultValue(null)]
         public InArgument<string> ProcessKey { get; set; }
 
-
+        [Description("The rules as a raw JSON string.")]
         [Category("Output - Data")]
         public OutArgument<string> JsonString { get; set; }
+        [Description("The rules as a JObject using the Newtonsoft.Json library.")]
         [Category("Output - Data")]
         public OutArgument<JObject> JsonObject { get; set; }
 

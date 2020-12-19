@@ -5,38 +5,46 @@ using System.ComponentModel;
 
 namespace Anymate.UiPath.Tasks
 {
+    [Description("Used when a Task encounters a system error/exception.")]
     public class ErrorTask : CodeActivity
     {
         private AnymateClient _anymateClient;
 
-
+        [Description("Make sure to initiate your AnymateClient and pass the return object along before calling this activity.")]
         [Category("Input")]
         [RequiredArgument]
         public InArgument<AnymateClient> AnymateClient { get; set; }
 
 
+        [Description("TaskId identifying the Task that has an Error.")]
         [Category("Input")]
         [RequiredArgument]
         [DefaultValue(null)]
         public InArgument<long> TaskId { get; set; }
 
+        [Description("Add a custom reason.")]
         [Category("Input")]
         [DefaultValue(null)]
         public InArgument<string> Reason { get; set; }
 
+        [Description("Add a comment.")]
         [Category("Input")]
         [DefaultValue(null)]
         public InArgument<string> Comment { get; set; }
+        [Description("Option to override Entries - used for Advanced KPI's, please go to Process Settings to learn more about this.")]
         [Category("Input - KPI Overrides")]
         [DefaultValue(null)]
         public InArgument<int?> OverwriteEntries { get; set; }
 
+        [Description("Option to override KPI Seconds - used for Advanced KPI's, please go to Process Settings to learn more about this.")]
         [Category("Input - KPI Overrides")]
         [DefaultValue(null)]
         public InArgument<int?> OverwriteSecondsSaved { get; set; }
 
+        [Description("The response message from Anymate.")]
         [Category("Output - FlowControl")]
         public OutArgument<string> Message { get; set; }
+        [Description("Indicates whether the action was processed as intended or not.")]
         [Category("Output - FlowControl")]
         public OutArgument<bool> Succeeded { get; set; }
 

@@ -11,33 +11,38 @@ using Newtonsoft.Json.Linq;
 
 namespace Anymate.UiPath.Tasks
 {
+    [Description("Will create multiple tasks on the specified Process. ProcessKeys can't be null.")]
     public class CreateTasks : CodeActivity
     {
         private AnymateClient _anymateClient;
 
-
+        [Description("Make sure to initiate your AnymateClient and pass the return object along before calling this activity.")]
         [Category("Input")]
         [RequiredArgument]
         public InArgument<AnymateClient> AnymateClient { get; set; }
 
+        [Description("Raw JSON as input for creating the tasks. This should be a json array. Only one of JsonPayload, DatatablePayload or ListPayload is required.")]
         [Category("Input - Json")]
         [OverloadGroup("OnlyJson")]
         [DefaultValue(null)]
         [RequiredArgument]
         public InArgument<string> JsonPayload { get; set; }
 
+        [Description("DataTable as input for creating the tasks. Only one of JsonPayload, DatatablePayload or ListPayload is required.")]
         [Category("Input - DataTable")]
         [OverloadGroup("OnlyJObject")]
         [DefaultValue(null)]
         [RequiredArgument]
         public InArgument<DataTable> DatatablePayload { get; set; }
 
+        [Description("List of objects for creating the tasks. Only one of JsonPayload, DatatablePayload or ListPayload is required.")]
         [Category("Input - List")]
         [OverloadGroup("OnlyList")]
         [DefaultValue(null)]
         [RequiredArgument]
         public InArgument<IEnumerable<object>> ListPayload { get; set; }
 
+        [Description("ProcessKey identifying the target Process where the tasks should be created.")]
         [Category("Input")]
         [OverloadGroup("OnlyJObject")]
         [OverloadGroup("OnlyJson")]
@@ -47,10 +52,13 @@ namespace Anymate.UiPath.Tasks
         public InArgument<string> ProcessKey { get; set; }
 
 
+        [Description("The response message from Anymate.")]
         [Category("Output - FlowControl")]
         public OutArgument<string> Message { get; set; }
+        [Description("Indicates whether the action was processed as intended or not.")]
         [Category("Output - FlowControl")]
         public OutArgument<bool> Succeeded { get; set; }
+        [Description("List of TaskIds that has been created.")]
         [Category("Output - FlowControl")]
         public OutArgument<List<long>> CreatedTaskIdList { get; set; }
 

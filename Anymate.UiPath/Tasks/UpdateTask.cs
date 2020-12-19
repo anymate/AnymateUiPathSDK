@@ -8,40 +8,38 @@ using Newtonsoft.Json;
 
 namespace Anymate.UiPath.Tasks
 {
+    [Description("Used to update data fields on a Task, e.g. if the script should supply more data before sending the Task to Manual.")]
     public class UpdateTask : CodeActivity
     {
         private AnymateClient _anymateClient;
 
-
+        [Description("Make sure to initiate your AnymateClient and pass the return object along before calling this activity.")]
         [Category("Input")]
         [RequiredArgument]
         public InArgument<AnymateClient> AnymateClient { get; set; }
 
+        [Description("Raw JSON string that will be used to update the Task. Remember to supply a TaskId. Only one of JsonPayload or DictPayload is needed.")]
         [Category("Input - Json")]
         [OverloadGroup("OnlyJson")]
         [DefaultValue(null)]
         [RequiredArgument]
         public InArgument<string> JsonPayload { get; set; }
 
-
+        [Description("Dictionary that will be used to update the Task. Only one of JsonPayload or DictPayload is needed.")]
         [Category("Input - Dictionary")]
         [OverloadGroup("OnlyJObject")]
         [DefaultValue(null)]
         [RequiredArgument]
         public InArgument<Dictionary<string, string>> DictPayload { get; set; }
 
-        [Category("Input")]
-        [OverloadGroup("OnlyJObject")]
-        [OverloadGroup("OnlyJson")]
-        [DefaultValue(null)]
-        public InArgument<string> ProcessKey { get; set; }
-
+        [Description("If you use a DictPayload, then you can use this to add a comment. You can also supply it yourself in the dictionary.")]
         [Category("Input - Dictionary")]
         [OverloadGroup("OnlyJObject")]
         [DefaultValue(null)]
         [DependsOn("DictPayload")]
         public InArgument<string> Comment { get; set; }
 
+        [Description("If you use a DictPayload, then you can use this to add a TaskId. You can also supply it yourself in the dictionary.")]
         [Category("Input")]
         [OverloadGroup("OnlyJObject")]
         [DefaultValue(-1)]
@@ -49,9 +47,10 @@ namespace Anymate.UiPath.Tasks
         public InArgument<long> TaskId { get; set; }
 
 
-
+        [Description("The response message from Anymate.")]
         [Category("Output - FlowControl")]
         public OutArgument<string> Message { get; set; }
+        [Description("Indicates whether the action was processed as intended or not.")]
         [Category("Output - FlowControl")]
         public OutArgument<bool> Succeeded { get; set; }
 

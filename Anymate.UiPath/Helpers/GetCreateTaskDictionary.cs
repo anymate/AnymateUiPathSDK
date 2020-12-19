@@ -6,17 +6,20 @@ using System;
 
 namespace Anymate.UiPath.Helpers
 {
+    [Description("Used to get a new Dictionary that can be used when creating a new task.")]
     public class GetCreateTaskDictionary : CodeActivity
     {
-
+        [Description("Will add a optional comment to the Create Task dictionary.")]
         [Category("Input - Optional")]
         [DefaultValue(null)]
         public InArgument<string> Comment { get; set; }
 
+        [Description("Will add a optional activationDate - if not supplied, anymate will use the default activationDate if set otherwise using creation date.")]
         [Category("Input - Optional")]
         [DefaultValue(null)]
-        public InArgument<DateTime?> ActivationDate { get; set; }
+        public InArgument<DateTimeOffset?> ActivationDate { get; set; }
 
+        [Description("The CreateTask dictionary.")]
         [Category("Output - FlowControl")]
         public OutArgument<Dictionary<string,string>> Dict { get; set; }
 

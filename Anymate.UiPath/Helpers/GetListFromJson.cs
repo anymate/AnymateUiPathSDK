@@ -6,21 +6,23 @@ using Newtonsoft.Json.Linq;
 
 namespace Anymate.UiPath.Helpers
 {
+    [Description("A helper function to read lists from inside json objects.")]
     public class GetListFromJson : CodeActivity
     {
-
+        [Description("Input json string where we should read the List from. Only one of JsonString or JsonObject is required")]
         [Category("Input Raw Json")]
         [DefaultValue(null)]
         [OverloadGroup("RawJson")]
         [RequiredArgument]
         public InArgument<string> JsonString { get; set; }
 
+        [Description("Input json object where we should read the List from. Only one of JsonString or JsonObject is required")]
         [Category("Input JObject")]
         [DefaultValue(null)]
         [OverloadGroup("JObject")]
         [RequiredArgument]
         public InArgument<JObject> JsonObject { get; set; }
-
+        [Description("The Key from where we should take the Json Array.")]
         [Category("Input")]
         [DefaultValue(null)]
         [OverloadGroup("RawJson")]
@@ -28,7 +30,7 @@ namespace Anymate.UiPath.Helpers
         [RequiredArgument]
         public InArgument<string> ArrayKey { get; set; }
 
-
+        [Description("Returns an array with strings.")]
         [Category("Output")]
         public OutArgument<List<string>> JsonListOutput { get; set; }
 

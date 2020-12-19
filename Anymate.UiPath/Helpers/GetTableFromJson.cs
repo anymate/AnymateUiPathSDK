@@ -2,25 +2,29 @@
 using System.Activities;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using Newtonsoft.Json.Linq;
 
 namespace Anymate.UiPath.Helpers
 {
+    [Description("A helper function to read tables (lists with objects) from inside a json object.")]
     public class GetTableFromJson : CodeActivity
     {
-
+        [Description("Input json object where we should read the table from. Only one of JsonString or JsonObject is required")]
         [Category("Input Raw Json")]
         [DefaultValue(null)]
         [OverloadGroup("RawJson")]
         [RequiredArgument]
         public InArgument<string> JsonString { get; set; }
 
+        [Description("Input json object where we should read the table from. Only one of JsonString or JsonObject is required")]
         [Category("Input JObject")]
         [DefaultValue(null)]
         [OverloadGroup("JObject")]
         [RequiredArgument]
         public InArgument<JObject> JsonObject { get; set; }
 
+        [Description("The Key from where we should take the table.")]
         [Category("Input")]
         [DefaultValue(null)]
         [OverloadGroup("RawJson")]
@@ -28,9 +32,13 @@ namespace Anymate.UiPath.Helpers
         [RequiredArgument]
         public InArgument<string> ArrayKey { get; set; }
 
-
+        [Description("The json table serialized as a list of dictionaries with string keys and object values.")]
         [Category("Output")]
         public OutArgument<List<Dictionary<string, object>>> JsonTableOutput { get; set; }
+
+        [Description("The json table serialized as a datatable.")]
+        [Category("Output")]
+        public OutArgument<DataTable> DataTableOutput { get; set; }
 
 
 
@@ -62,10 +70,13 @@ namespace Anymate.UiPath.Helpers
             }
             //var array = jsonObject.GetValue(arrayKey, StringComparison.InvariantCultureIgnoreCase)?.Value<List<Dictionary<string, object>>>();
             var array = jsonObject[arrayKey]?.ToObject<List<Dictionary<string, object>>>();
-            
+            var dt = jsonObject[arrayKey]?.ToObject<DataTable>();
             if (array == null)
                 array = new List<Dictionary<string, object>>();
             JsonTableOutput.Set(context, array);
+            if (dt == null)
+                dt = new DataTable();
+            DataTableOutput.Set(context, dt);
 
         }
     }
