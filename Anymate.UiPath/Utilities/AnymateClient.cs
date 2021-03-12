@@ -186,7 +186,7 @@ namespace Anymate.UiPath
             var formData = GetFormDataPasswordAuth(request);
             return GetAuthToken(formData, request.client_id);
         }
-        
+
         private AuthResponse GetAuthToken(Dictionary<string, string> formData, string customerKey)
         {
             var values = formData;
@@ -246,12 +246,14 @@ namespace Anymate.UiPath
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 client.Timeout = TimeSpan.FromMinutes(5);
-                using (HttpResponseMessage response = AsyncUtil.RunSync(() =>
-                    client.PostAsync(GetAnymateUrl(customerKey) + endpoint, content)))
-                using (HttpContent responseContent = response.Content)
+                using (HttpResponseMessage response = AsyncUtil.RunSync(() => client.PostAsync(GetAnymateUrl(customerKey) + endpoint, content)))
                 {
-                    string data = AsyncUtil.RunSync(() => responseContent.ReadAsStringAsync());
-                    return data;
+                    var responseResult = response.EnsureSuccessStatusCode();
+                    using (HttpContent responseContent = response.Content)
+                    {
+                        string data = AsyncUtil.RunSync(() => responseContent.ReadAsStringAsync());
+                        return data;
+                    }
                 }
             }
         }
@@ -266,12 +268,14 @@ namespace Anymate.UiPath
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 client.Timeout = TimeSpan.FromMinutes(5);
-                using (HttpResponseMessage response =
-                    AsyncUtil.RunSync(() => client.GetAsync(GetAnymateUrl(customerKey) + endpoint)))
-                using (HttpContent responseContent = response.Content)
+                using (HttpResponseMessage response = AsyncUtil.RunSync(() => client.GetAsync(GetAnymateUrl(customerKey) + endpoint)))
                 {
-                    string data = AsyncUtil.RunSync(() => responseContent.ReadAsStringAsync());
-                    return data;
+                    var responseResult = response.EnsureSuccessStatusCode();
+                    using (HttpContent responseContent = response.Content)
+                    {
+                        string data = AsyncUtil.RunSync(() => responseContent.ReadAsStringAsync());
+                        return data;
+                    }
                 }
             }
         }
@@ -329,7 +333,7 @@ namespace Anymate.UiPath
             var endpoint = $"/api/TakeNext/{processKey}";
             return CallApiGet(endpoint);
         }
-        
+
         public TResponse CreateTask<TResponse>(string payload, string processKey)
         {
             var endpoint = $"/api/CreateTask/{processKey}";
@@ -352,7 +356,7 @@ namespace Anymate.UiPath
             var response = CallApiPost(endpoint, payload);
             return JsonConvert.DeserializeObject<TResponse>(response);
         }
-        
+
         public string CreateAndTakeTask(string payload, string processKey)
         {
             var endpoint = $"/api/CreateAndTakeTask/{processKey}";
@@ -366,7 +370,7 @@ namespace Anymate.UiPath
             var response = CallApiPost(endpoint, payload);
             return JsonConvert.DeserializeObject<T>(response);
         }
-        
+
         public TResponse Error<TResponse, TAction>(TAction action)
         {
             var payload = JsonConvert.SerializeObject(action);
@@ -376,7 +380,7 @@ namespace Anymate.UiPath
 
 
 
- 
+
         public TResponse Retry<TResponse>(string payload)
         {
             var endpoint = $"/api/Retry/";
@@ -390,7 +394,7 @@ namespace Anymate.UiPath
             return Retry<TResponse>(payload);
         }
 
- 
+
         public TResponse Manual<TResponse>(string payload)
         {
             var endpoint = $"/api/Manual/";
@@ -404,7 +408,7 @@ namespace Anymate.UiPath
             var payload = JsonConvert.SerializeObject(action);
             return Manual<TResponse>(payload);
         }
-                
+
         public TResponse Solved<TResponse>(string payload)
         {
             var endpoint = $"/api/Solved/";
