@@ -9,27 +9,7 @@ namespace Anymate.UiPath
         public static string CustomerKey => "auth.anymate.app/CustomerKey";
         public static string UserType => "auth.anymate.app/UserType";
 
-        public static bool AccessTokenLooksRight(string access_token)
-        {
-            var handler = new JwtSecurityTokenHandler();
-            var jsonToken = handler.ReadToken(access_token) as JwtSecurityToken;
-
-            //if (!jsonToken.Issuer.Equals("https://identity.auth.anymate.eu/", StringComparison.InvariantCultureIgnoreCase))
-            //    throw new Exception("Access token is not issued by Anymate");
-
-            if (!jsonToken.Audiences.Contains("apimate"))
-                throw new Exception("Access token is not valid for Anymate API");
-
-            if (!jsonToken.Claims.Any(x => x.Type == CustomerKey))
-                throw new Exception("Access token is not valid.");
-
-
-            if (!jsonToken.Claims.Any(x => x.Type == UserType))
-                throw new Exception("Access token is not valid.");
-
-            return true;
-        }
-
+      
         private static long GetExpiryEpochFromToken(string access_token)
         {
             var handler = new JwtSecurityTokenHandler();
